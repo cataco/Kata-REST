@@ -51,6 +51,12 @@ class PortafolioTestCase(TestCase):
         print(current_data)
         self.assertEqual(len(current_data), 1)
 
+    def test_login(self):
+        url = 'http://127.0.0.1:8000/kataportafolio/login/'
+        response = self.client.post(url, json.dumps(
+            {"username": "usertdd", "password": "usertdd123"}), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
     # def test_editar_datos_persona(self):
     #    user_model = User.objects.create_user(username='test123', password='kd8wke-DE34', first_name='test',
     #                                          last_name='test', email='test@test.com')

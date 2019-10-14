@@ -30,7 +30,7 @@ class PortafolioTestCase(TestCase):
         self.assertEqual(len(current_data), 2)
 
     def test_add_user(self):
-        response = self.client.post('http://127.0.0.1:8000/kataportafolio/addUser', json.dumps(
+        response = self.client.post('http://127.0.0.1:8000/kataportafolio/addUser/', json.dumps(
             {"username": "usertdd", "first_name": "Test TDD", "last_name": "User TDD", "password": "usertdd123",
              "email": "testdd@test.com"}), content_type='application/json')
         current_data = json.loads(response.content)

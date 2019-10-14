@@ -1,9 +1,10 @@
 import json
 
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
+from django.contrib.auth import authenticate
 
 from kataportafolio.models import Portafolio
 
@@ -43,3 +44,11 @@ def add_user_view(request):
             user_model.email = email
     user_model.save()
     return HttpResponse(serializers.serialize("json", [user_model]))
+
+def user_login(request):
+        user_params = json.loads(request.body)
+        user = authenticate(username=user_params['username'], password=user_params['password'])
+        if user is not None:
+            return JsonResponse({'status': 'Authenticated'})
+        else:
+            return JsonResponse({'status': 'Error'})

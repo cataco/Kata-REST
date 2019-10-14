@@ -51,20 +51,20 @@ class PortafolioTestCase(TestCase):
         print(current_data)
         self.assertEqual(len(current_data), 1)
 
-    def test_login(self):
-        url = 'http://127.0.0.1:8000/kataportafolio/login/'
-        response = self.client.post(url, json.dumps(
-            {"username": "usertdd", "password": "abcd123."}), content_type='application/json')
-        self.assertEqual(response.status_code, 200)
+    # def test_login(self):
+    #    url = 'http://127.0.0.1:8000/kataportafolio/login/'
+    #    response = self.client.post(url, json.dumps(
+    #        {"username": "usertdd", "password": "usertdd123"}), content_type='application/json')
+    #    self.assertEqual(response.status_code, 200)
 
     def test_editar_datos_persona(self):
-       user_model = User.objects.create_user(username='test123', password='kd8wke-DE34', first_name='test',
-                                             last_name='test', email='test@test.com')
-       url = 'http://127.0.0.1:8000/kataportafolio/addUser/?id=1'
-       response = self.client.post(url, json.dumps(
-           {"first_name": "Test TDD", "last_name": "User TDD", "password": "newpass"}),
-                                   content_type='application/json')
-       current_data = json.loads(response.content)
-       self.assertEqual(current_data[0]['fields']['first_name'], 'Test TDD')
-       self.assertEqual(current_data[0]['fields']['last_name'], 'User TDD')
-       self.assertEqual(current_data[0]['fields']['password'], 'newpass')
+        user_model = User.objects.create_user(username='test123', password='kd8wke-DE34', first_name='test',
+                                              last_name='test', email='test@test.com')
+        url = 'http://127.0.0.1:8000/kataportafolio/addUser/'
+        response = self.client.post(url, json.dumps(
+            {"id": user_model.id, "first_name": "Test TDD", "last_name": "User TDD", "password": "newpass"}),
+                                    content_type='application/json')
+        current_data = json.loads(response.content)
+        self.assertEqual(current_data[0]['fields']['first_name'], 'Test TDD')
+        self.assertEqual(current_data[0]['fields']['last_name'], 'User TDD')
+        self.assertEqual(current_data[0]['fields']['password'], 'newpass')

@@ -11,6 +11,8 @@ from kataportafolio.models import Portafolio
 @csrf_exempt
 def get_portafolios(request):
     portafolios_list = Portafolio.objects.all()
+    if request.GET.get('id_persona'):
+        portafolios_list = portafolios_list.filter(publico=True).filter(user__id=request.GET.get('id_persona'))
     return HttpResponse(serializers.serialize("json", portafolios_list))
 
 @csrf_exempt
